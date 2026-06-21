@@ -1,0 +1,6 @@
+{
+  "name": "issue-ops",
+  "version": "0.1.0",
+  "description": "Team workflow plugin for the Issue Tracker.",
+  "author": {"name": "Issue Tracker Team"}
+}

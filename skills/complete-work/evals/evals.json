@@ -1,0 +1,46 @@
+{
+  "skill_name": "issue-wrap-up",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm done with the board-layout issue. Moved it from flexbox to CSS grid, extracted Column into its own component.",
+      "expected_output": "Skill fetches GET /api/issues, identifies 'Design board layout' by title fragment, patches it with status=done, assignee=null, and description appended with the summary the dev gave. Confirms back to the dev what happened.",
+      "files": [],
+      "assertions": [
+        "The agent calls GET http://localhost:3000/api/issues to find the issue",
+        "The agent identifies 'Design board layout' as the matching issue",
+        "The PATCH sets status to 'done'",
+        "The PATCH sets assignee to null or empty",
+        "The PATCH appends the summary about flexbox/grid/Column to the description",
+        "The agent confirms what happened in 1-2 lines after the PATCH"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "ok I'm done with #3",
+      "expected_output": "Skill fetches issues, maps #3 to 'Write API routes' (3rd in list), confirms with dev before patching, then patches with status=done, assignee=null, and asks for or infers a one-line summary to append.",
+      "files": [],
+      "assertions": [
+        "The agent calls GET http://localhost:3000/api/issues",
+        "The agent identifies issue #3 as 'Write API routes'",
+        "The agent either confirms with the dev or echoes the title before mutating",
+        "The PATCH sets status to 'done'",
+        "The PATCH sets assignee to null or empty",
+        "A summary is appended to the description (either from context, git log, or by asking)"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "that's done, close it out — I rewrote the route handlers to use the new middleware",
+      "expected_output": "Skill recognizes vague 'that's done' phrasing, fetches issues, and since no issue is clearly named it asks which issue or infers from session context. Uses the description the dev gave ('rewrote route handlers...') as the summary. Patches correctly.",
+      "files": [],
+      "assertions": [
+        "The agent calls GET http://localhost:3000/api/issues",
+        "The agent either asks for clarification OR infers an issue from context",
+        "The PATCH uses the dev's phrase about route handlers as the summary",
+        "The PATCH sets status to 'done'",
+        "The PATCH sets assignee to null"
+      ]
+    }
+  ]
+}
